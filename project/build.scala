@@ -13,7 +13,8 @@ object AppBuild extends Build {
     commonSettings:_*)
 
   lazy val app = Project("app",
-    file("app")).dependsOn(generatedCode).settings(commonSettings:_*)
+    file("app")).dependsOn(generatedCode).settings(
+    commonSettings:_*)
 
   lazy val migrationManager = Project("migration_manager",
     file("migration_manager")).settings(commonSettings:_*)
