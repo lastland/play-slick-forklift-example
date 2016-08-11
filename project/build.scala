@@ -4,7 +4,7 @@ import Keys._
 object AppBuild extends Build {
   lazy val commonSettings = Seq(
     version := "1.0",
-    scalaVersion := "2.11.6",
+    scalaVersion := "2.11.8",
     scalacOptions += "-deprecation",
     scalacOptions += "-feature")
 
