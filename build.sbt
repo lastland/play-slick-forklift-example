@@ -12,7 +12,8 @@ lazy val commonSettings = Seq(
   version := "1.0",
   scalaVersion := "2.11.8",
   scalacOptions += "-deprecation",
-  scalacOptions += "-feature"
+  scalacOptions += "-feature",
+  resolvers += Resolver.bintrayRepo("naftoligug", "maven")
 )
 
 lazy val loggingDependencies = List(
