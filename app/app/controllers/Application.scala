@@ -1,21 +1,21 @@
 package controllers
 
-import javax.inject.Inject
-
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import slick.driver.JdbcProfile
-import play.api._
-import play.api.mvc._
-import play.api.db.slick.DatabaseConfigProvider
+import scala.concurrent.Future
+
 import datamodel.latest.schema.tables._
-import slick.driver.H2Driver.api._
+import javax.inject.Inject
+import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.mvc._
+import slick.jdbc.JdbcProfile
 
-class Application @Inject()(dbConfigProvider: DatabaseConfigProvider)
-    extends Controller {
-  val dbConfig = dbConfigProvider.get[JdbcProfile]
+class Application @Inject()(
+  val cc: ControllerComponents,
+  protected val dbConfigProvider: DatabaseConfigProvider
+) extends AbstractController(cc) with HasDatabaseConfigProvider[JdbcProfile] {
+  import dbConfig.profile.api._
 
-  def index = Action.async { implicit request =>
+  def index: Action[AnyContent] = Action.async { implicit request =>
     val resultingUsers: Future[Seq[UsersRow]] = dbConfig.db.run(Users.result)
     resultingUsers.map(users => Ok(views.html.index(users)))
   }
